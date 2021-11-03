@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem name="KCMS Project" id="menu_kcms_project_root" web_icon="kcms_project,static/description/icon.png"/>
+    <menuitem name="Projects" id="menu_kcms_project" parent="menu_kcms_project_root" action="action_kcms_project_list"/>
+    <menuitem name="Frame" id="menu_kcms_project_frame" parent="menu_kcms_project_root" action="action_kcms_project_item_list"/>
+    <menuitem name="Configuration" id="menu_kcms_project_configuration" parent="menu_kcms_project_root"/>
+    <menuitem name="Item Library" id="menu_kcms_project_itemlibrary" parent="menu_kcms_project_configuration" action="action_kcms_project_item_base_list"/>
+</odoo>

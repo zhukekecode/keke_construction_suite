@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_kcms_project_form" model="ir.ui.view">
+            <field name="name">kcms.project.form</field>
+            <field name="model">kcms.project</field>
+            <field name="arch" type="xml">
+                <form string="Project">
+                    <header>
+                        <widget name="import_estimate" string="Import Estimate Statement" highlight="1"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_get_attachment_view" class="oe_stat_button" icon="fa-book"
+                                    type="object">
+                                <field name="attachment_number" widget="statinfo" string="attachments"/>
+                            </button>
+                        </div>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
+                                attrs="{'invisible': [('active', '=', True)]}"/>
+                        <group>
+                            <group>
+                                <field name="active" invisible="1"/>
+                                <field name="code"/>
+                                <field name="name"/>
+                                <field name="name_path"/>
+                                <field name="project_id"/>
+                            </group>
+                            <group>
+                                <field name="partner_id_owner"/>
+                                <field name="partner_id_FPC"/>
+                                <field name="user_id" widget="many2one_avatar_user"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_kcms_project_list" model="ir.ui.view">
+            <field name="name">kcms.project.list</field>
+            <field name="model">kcms.project</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="sequence" widget="handle"/>
+                    <field name="code" string="Project Code"/>
+                    <field name="name" string="Project Name"/>
+                    <field name="name_path"/>
+                    <field name="user_id" widget="many2one_avatar_user"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_kcms_project_search" model="ir.ui.view">
+            <field name="name">kcms.project.search</field>
+            <field name="model">kcms.project</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name" filter_domain="[('name','like',self)]"/>
+                    <searchpanel>
+                        <field name="project_id" icon="fa-list" string="Projects" enable_counters="1"/>
+                    </searchpanel>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_kcms_project_list" model="ir.actions.act_window">
+            <field name="name">Projects</field>
+            <field name="res_model">kcms.project</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_kcms_project_list"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Add a new project
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel porttitor eros,
+                    nec interdum erat. Phasellus nunc ligula, euismod eu pellentesque quis,
+                    facilisis eu felis. Donec consequat eros sit amet ligula bibendum blandit.
+                    Proin facilisis, eros vitae tristique gravida, dolor dolor scelerisque nisi,
+                    quis imperdiet libero turpis viverra odio. Sed sit amet mattis enim.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

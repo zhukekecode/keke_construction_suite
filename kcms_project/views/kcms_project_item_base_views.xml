@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_kcms_project_item_base_form" model="ir.ui.view">
+            <field name="name">kcms.project.item.base.form</field>
+            <field name="model">kcms.project.item.base</field>
+            <field name="arch" type="xml">
+                <form string="Item">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="name"/>
+                                <field name="discription"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_kcms_project_item_base_list" model="ir.ui.view">
+            <field name="name">kcms.project.item.base.list</field>
+            <field name="model">kcms.project.item.base</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="sequence" widget="handle"/>
+                    <field name="code" string="Item Code"/>
+                    <field name="name" string="Item Name"/>
+                    <field name="discription" string="Item discription"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_kcms_project_item_base_search" model="ir.ui.view">
+            <field name="name">kcms.project.item.base.search</field>
+            <field name="model">kcms.project.item.base</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name" filter_domain="[('name','like',self)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_kcms_project_item_base_list" model="ir.actions.act_window">
+            <field name="name">Items</field>
+            <field name="res_model">kcms.project.item.base</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_kcms_project_item_base_list"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Import or create your construction ItemBase
+              </p><p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel porttitor eros,
+                nec interdum erat. Phasellus nunc ligula, euismod eu pellentesque quis,
+                facilisis eu felis. Donec consequat eros sit amet ligula bibendum blandit.
+                Proin facilisis, eros vitae tristique gravida, dolor dolor scelerisque nisi,
+                quis imperdiet libero turpis viverra odio. Sed sit amet mattis enim.
+              </p>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <!-- This template is for a table at the top of purchase views that shows the Purchase Dashboard. -->
+    <t t-name="kcms.purchase.PurchaseDashboard">
+        <div class="o_purchase_dashboard container">
+        <div class="row">
+            <div class="col-sm-7">
+            <table class="table table-sm">
+            </table></div>
+
+            <div class="col-sm-5">
+            <table class="table table-sm">
+                    <tr>
+                        <!-- can't use th tag due to list rendering error when no values in list... -->
+                        <td class="o_text">Ordered Value (<t t-esc="values['company_currency_symbol']"/>)</td>
+                        <td><span id="aaa"><t t-esc="values['order_value']"/></span></td>
+                        <td class="o_text">Bill Value (<t t-esc="values['company_currency_symbol']"/>)</td>
+                        <td><span><t t-esc="values['bill_value']"/></span></td>
+                    </tr>
+                    <tr>
+                        <td class="o_text">EST Cost</td>
+                        <td><span><t t-esc="values['est_cost']"/> &#160;Days</span></td>
+                        <td class="o_text">Order Counts</td>
+                        <td><span><t t-esc="values['order_counts']"/></span></td>
+                    </tr>
+            </table></div>
+        </div></div>
+    </t>
+</templates>

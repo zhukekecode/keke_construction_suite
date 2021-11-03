@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_kcms_project_item_form" model="ir.ui.view">
+            <field name="name">kcms.project.item.form</field>
+            <field name="model">kcms.project.item</field>
+            <field name="arch" type="xml">
+                <form string="Item">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="code"/>
+                                <field name="project_id"/>
+                                <field name="base_id"/>
+                                <field name="estimate_cost" widget='monetary'
+                                       options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                            <field name="subitem_ids" string="Sub Items">
+                                <tree string="Sub Item Lines" editable="bottom">
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="base_id"/>
+                                    <field name="quantity"/>
+                                    <field name="rate" widget='monetary'
+                                           options="{'currency_field': 'currency_id'}"/>
+                                    <field name="sub_total" widget='monetary'
+                                           options="{'currency_field': 'currency_id'}"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_kcms_project_item_list" model="ir.ui.view">
+            <field name="name">kcms.project.item.list</field>
+            <field name="model">kcms.project.item</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="sequence" widget="handle"/>
+                    <field name="code" string="Item Code"/>
+                    <field name="project_id"/>
+                    <field name="base_id"/>
+                    <field name="estimate_cost" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_kcms_project_item_search" model="ir.ui.view">
+            <field name="name">kcms.project.item.search</field>
+            <field name="model">kcms.project.item</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="code" filter_domain="[('code','like',self)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_kcms_project_item_list" model="ir.actions.act_window">
+            <field name="name">Items</field>
+            <field name="res_model">kcms.project.item</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_kcms_project_item_list"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Import or create your construction project item
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel porttitor eros,
+                    nec interdum erat. Phasellus nunc ligula, euismod eu pellentesque quis,
+                    facilisis eu felis. Donec consequat eros sit amet ligula bibendum blandit.
+                    Proin facilisis, eros vitae tristique gravida, dolor dolor scelerisque nisi,
+                    quis imperdiet libero turpis viverra odio. Sed sit amet mattis enim.
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

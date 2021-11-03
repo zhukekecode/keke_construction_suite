@@ -1,0 +1,142 @@
+# -*- coding: utf-8 -*-
+import base64
+
+import xlrd
+
+from odoo import api, fields, models, _, tools
+from odoo.api import onchange
+from odoo.osv import expression
+from odoo.exceptions import UserError, ValidationError
+
+
+class KCMSProject(models.Model):
+    _name = "kcms.project"
+    _description = "keke construction management system (project) -- project"
+    _parent_name = "project_id"
+    _parent_store = True
+    _rec_name = 'code'
+
+    sequence = fields.Integer(string='Sequence')
+    active = fields.Boolean(default=True,
+                            help="If the active field is set to False, it will allow you to hide the project without removing it.")
+    code = fields.Char(string="Project Code")
+    name = fields.Char(string="Project Name")
+    name_path = fields.Char(string="Project Name", compute='_compute_name_path', store=True)
+    project_id = fields.Many2one("kcms.project", string="Parent Project", ondelete='restrict')
+    project_ids = fields.One2many('kcms.project', 'project_id', string='Sub Projects')
+    parent_path = fields.Char(index=True)
+    partner_id_owner = fields.Many2one('res.partner', string='The Owner')
+    partner_id_FPC = fields.Many2one('res.partner', string='First Point Contact')
+    user_id = fields.Many2one('res.users', string='Project Manager', tracking=True)
+    attachment_number = fields.Integer('Number of Attachments', compute='_compute_attachment_number')
+
+    @api.model
+    def create(self, vals):
+        res = super(KCMSProject, self).create(vals)
+        if not vals['project_id']:
+            self.env['kcms.project'].create({
+                'code': res.code+'GE',
+                'name': 'General',
+                'project_id': res.id
+            })
+        return res
+
+    @onchange('code', 'project_id')
+    def _onchange_code(self):
+        if self.project_id:
+            if self.project_id.code not in self.code:
+                self.code = self.project_id.code + self.code
+
+    def action_get_attachment_view(self):
+        self.ensure_one()
+        res = self.env['ir.actions.act_window']._for_xml_id('base.action_attachment')
+        rids = self.ids
+        if self.project_ids:
+            for p in self.project_ids:
+                rids = rids + p.ids
+        res['domain'] = [('res_model', '=', 'kcms.project'), ('res_id', 'in', rids)]
+        res['context'] = {'default_res_model': 'kcms.project', 'default_res_id': self.id}
+        return res
+
+    @api.depends('name', 'project_id.name_path')
+    def _compute_name_path(self):
+        for project in self:
+            if project.project_id:
+                project.name_path = '%s / %s' % (project.project_id.name_path, project.name)
+            else:
+                project.name_path = project.name
+
+    def _compute_attachment_number(self):
+        attachment_data = self.env['ir.attachment'].read_group(
+            [('res_model', '=', 'kcms.project'), ('res_id', 'in', self.ids)], ['res_id'], ['res_id'])
+        attachment = dict((data['res_id'], data['res_id_count']) for data in attachment_data)
+        for expense in self:
+            expense.attachment_number = attachment.get(expense.id, 0)
+        if self.project_ids:
+            for p in self.project_ids:
+                self.attachment_number = self.attachment_number + p.attachment_number
+
+    def create_item_from_attachments(self, attachment_ids=None, pid=None, view_type='tree'):
+        if attachment_ids is None:
+            attachment_ids = []
+        attachments = self.env['ir.attachment'].browse(attachment_ids)
+        pid = self.env['kcms.project'].browse(pid)
+        if not attachments:
+            raise UserError(_("No attachment was provided"))
+
+        for attachment in attachments:
+            decoded_data = base64.b64decode(attachment.datas)
+            book = xlrd.open_workbook(file_contents=decoded_data or b'')
+            sh = book.sheet_by_index(0)
+            sub_items = []
+            is_start = False
+            base_id = None
+            item = None
+            for rx in range(0, sh.nrows):
+                row = sh.row(rx)
+                if row[0].value.isdigit():
+                    is_start = True
+                    self.create_subitems(base_id, item, sub_items)
+                    code = row[0].value
+                    name = row[1].value
+                    base_id = self.env['kcms.project.item.base'].search([('code', '=', code)])
+                    if not base_id.code:
+                        base_id = self.env['kcms.project.item.base'].create({
+                            'code': code,
+                            'name': name,
+                        })
+                    item = self.env['kcms.project.item'].create({
+                        'code': pid.code + base_id.code,
+                        'project_id': pid.id,
+                        'base_id': base_id.id,
+                    })
+                    sub_items = []
+                elif is_start:
+                    sub_items.append(row)
+            print(base_id, item, sub_items)
+            self.create_subitems(base_id, item, sub_items)
+
+    def create_subitems(self, base_id, item, sub_items):
+        for sub_item in sub_items:
+            if sub_item[1].value:
+                if sub_item[0].value:
+                    quantity = 0 if sub_item[2].value == '' else sub_item[2].value
+                    rate = 0 if sub_item[4].value == '' else sub_item[4].value
+                    sub_total = float(quantity)*float(rate)
+
+                    subbase_id = self.env['kcms.project.item.base'].search([('code', '=', sub_item[0].value)])
+                    if not subbase_id.code:
+                        subbase_id = self.env['kcms.project.item.base'].create({
+                            'code': sub_item[0].value,
+                            'name': sub_item[1].value,
+                            'itembase_id': base_id.id,
+                            'UOM': str(sub_item[3].value),
+                        })
+
+                    self.env['kcms.project.subitem'].create({
+                        'base_id': subbase_id.id,
+                        'quantity': format(quantity, '.2f'),
+                        'rate': format(rate, '.2f'),
+                        'sub_total': format(sub_total, '.2f'),
+                        'item_id': item.id,
+                    })

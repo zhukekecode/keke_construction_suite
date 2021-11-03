@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem name="KCMS Purchase" id="menu_kcms_purchase_root" web_icon="kcms_purchase,static/description/icon.png"/>
+    <menuitem name="Orders" id="menu_kcms_purchase_oders" parent="menu_kcms_purchase_root" action="action_kcms_purchase_dashboard_list"/>
+</odoo>
