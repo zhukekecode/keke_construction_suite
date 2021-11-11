@@ -8,6 +8,7 @@ from odoo.exceptions import UserError, ValidationError
 class KCMSProjectItemBase(models.Model):
     _name = "kcms.project.item.base"
     _description = "keke construction management system (project) -- ItemBase"
+    _rec_name = 'code'
 
     sequence = fields.Integer(string='Sequence')
     code = fields.Char(string="Item Code")

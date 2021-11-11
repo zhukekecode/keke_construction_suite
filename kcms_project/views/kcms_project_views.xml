@@ -2,7 +2,7 @@
 <odoo>
     <data>
         <record id="view_kcms_project_form" model="ir.ui.view">
-            <field name="name">kcms.project.form</field>
+            <field name="name">view.kcms.project.form</field>
             <field name="model">kcms.project</field>
             <field name="arch" type="xml">
                 <form string="Project">
@@ -25,18 +25,155 @@
                                 <field name="name"/>
                                 <field name="name_path"/>
                                 <field name="project_id"/>
+                                <field name="project_address"/>
+                                <field name="project_name"/>
                             </group>
                             <group>
-                                <field name="partner_id_owner"/>
-                                <field name="partner_id_FPC"/>
-                                <field name="user_id" widget="many2one_avatar_user"/>
+<!--                                <field name="partner_id_owner"/>-->
+<!--                                <field name="partner_id_FPC"/>-->
+<!--                                <field name="user_id" widget="many2one_avatar_user"/>-->
+                                <field name="lot_range" attrs="{'invisible': [('project_id', '=', False)]}"/>
+                                <field name="building_concent" attrs="{'invisible': [('project_id', '=', False)]}"/>
+                                <field name="start_date" attrs="{'invisible': [('project_id', '=', False)]}"/>
+                                <field name="estimated_completion_date" attrs="{'invisible': [('project_id', '=', False)]}"/>
+                                <field name="rc_number" attrs="{'invisible': [('project_id', '!=', False)]}"/>
+                                <field name="EPA" attrs="{'invisible': [('project_id', '!=', False)]}"/>
+                            </group>
+                            <group>
+                                <field name="building_work" attrs="{'invisible': [('project_id', '!=', False)]}"/>
+                                <field name="block_work" attrs="{'invisible': [('project_id', '=', False)]}"/>
                             </group>
                         </group>
+                        <notebook attrs="{'invisible': [('project_id', '!=', False)]}">
+                            <page string="The Owner">
+                                <group>
+                                    <group>
+                                         <field name="code"/>
+                                         <field name="partner_id_owner"/>
+                                         <field name="contact_person"/>
+                                         <field name="mailing_address"/>
+                                         <field name="street_address"/>
+                                    </group>
+                                    <group>
+                                        <field name="day_time_phone"/>
+                                        <field name="mobile_number"/>
+                                        <field name="after_hours"/>
+                                        <field name="facsimile"/>
+                                        <field name="email_address"/>
+                                    </group>
+                                </group>
+                            </page>
+                             <page string="First Point Contact">
+                                <group>
+                                    <group>
+                                         <field name="code"/>
+                                         <field name="partner_id_FPC"/>
+                                         <field name="mailing_address"/>
+                                         <field name="street_address"/>
+                                    </group>
+                                    <group name="invoice_info">
+                                        <field name="day_time_phone"/>
+                                        <field name="mobile_number"/>
+                                        <field name="after_hours"/>
+                                        <field name="facsimile"/>
+                                        <field name="email_address"/>
+                                    </group>
+                                </group>
+                            </page>
+                             <page string="Our Project Manager">
+                                <group>
+                                    <group>
+                                         <field name="code"/>
+                                         <field name="partner_id_FPC"/>
+                                         <field name="mobile_number"/>
+                                         <field name="email_address"/>
+                                    </group>
+                                    <group>
+                                         <field name="partner_id_FPC"/>
+                                         <field name="mobile_number"/>
+                                         <field name="email_address"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                        <notebook attrs="{'invisible': [('project_id', '=', False)]}">
+                            <page string="Inspection Status">
+                                <group>
+                                    <group>
+                                        <field name="lbp_status"/>
+                                        <span>Comments: </span>
+                                        <div class="o_row oe_inline" attrs="{'invisible': [('lbp_status', '=', False)]}">
+                                            <field name="lbp_comments" class="oe_inline"/>
+                                        </div>
+                                        <span>Completion date: </span>
+                                        <div class="o_row oe_inline" attrs="{'invisible': [('lbp_status', '=', False)]}">
+                                            <field name="lbp_date" class="oe_inline"/>
+                                        </div>
+                                    </group>
+                                    <group>
+                                        <field name="water"/>
+                                         <span>Comments: </span>
+                                        <div class="o_row oe_inline" attrs="{'invisible': [('water', '=', False)]}">
+                                            <field name="water_comments" class="oe_inline"/>
+                                        </div>
+                                        <span>Completion date: </span>
+                                        <div class="o_row oe_inline" attrs="{'invisible': [('water', '=', False)]}">
+                                            <field name="water_date" class="oe_inline"/>
+                                        </div>
+                                    </group>
+                                    <group>
+                                        <field name="gas"/>
+                                         <span>Comments: </span>
+                                        <div class="o_row oe_inline" attrs="{'invisible': [('gas', '=', False)]}">
+                                            <field name="gas_comments" class="oe_inline"/>
+                                        </div>
+                                        <span>Completion date: </span>
+                                        <div class="o_row oe_inline" attrs="{'invisible': [('gas', '=', False)]}">
+                                            <field name="gas_date" class="oe_inline"/>
+                                        </div>
+                                    </group>
+                                    <group>
+                                        <field name="electricity"/>
+                                        <span>Comments: </span>
+                                        <div class="o_row oe_inline" attrs="{'invisible': [('electricity', '=', False)]}">
+                                            <field name="electricity_comments" class="oe_inline"/>
+                                        </div>
+                                        <span>Completion date: </span>
+                                        <div class="o_row oe_inline" attrs="{'invisible': [('electricity', '=', False)]}">
+                                            <field name="electricity_date" class="oe_inline"/>
+                                        </div>
+                                    </group>
+                                    <group>
+                                        <field name="network"/>
+                                        <span>Comments: </span>
+                                        <div class="o_row oe_inline" attrs="{'invisible': [('network', '=', False)]}">
+                                            <field name="comments" class="oe_inline"/>
+                                        </div>
+                                        <span>Completion date: </span>
+                                        <div class="o_row oe_inline" attrs="{'invisible': [('network', '=', False)]}">
+                                            <field name="start_date" class="oe_inline"/>
+                                        </div>
+                                    </group>
+                                    <group>
+                                        <field name="vc_state"/>
+                                        <span>Comments: </span>
+                                        <div class="o_row oe_inline">
+                                            <field name="VC_comments" class="oe_inline"/>
+                                        </div>
+                                        <span>Completion date: </span>
+                                        <div class="o_row oe_inline">
+                                            <field name="VC_date" class="oe_inline"/>
+                                        </div>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>
         </record>
 
+        <!-- List View -->
         <record id="view_kcms_project_list" model="ir.ui.view">
             <field name="name">kcms.project.list</field>
             <field name="model">kcms.project</field>
@@ -64,10 +201,42 @@
             </field>
         </record>
 
+        <!-- Kanban View Project -->
+        <record id="view_kcms_project_kanban" model="ir.ui.view">
+            <field name="name">Project Kanban</field>
+            <field name="model">kcms.project</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="sequence" widget="handle"/>
+                    <field name="project_id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_content oe_kanban_global_click">
+                                <div class="oe_kanban_details">
+                                    <ul>
+                                        <div style="text-align:left">
+                                            <strong><field name="name_path"/></strong>
+                                            (Code: <field name="code"/>)
+                                        </div>
+                                        <li>
+                                            Project Est. Cost:
+                                        </li>
+                                        <li>
+                                            Project Total Order Value:
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
         <record id="action_kcms_project_list" model="ir.actions.act_window">
             <field name="name">Projects</field>
             <field name="res_model">kcms.project</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,kanban,form</field>
             <field name="view_id" ref="view_kcms_project_list"/>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">

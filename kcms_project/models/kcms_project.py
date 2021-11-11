@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 import base64
-
 import xlrd
-
 from odoo import api, fields, models, _, tools
 from odoo.api import onchange
-from odoo.osv import expression
-from odoo.exceptions import UserError, ValidationError
+import datetime
+import pytz
+from odoo.exceptions import ValidationError, UserError
 
 
 class KCMSProject(models.Model):
@@ -19,23 +18,75 @@ class KCMSProject(models.Model):
     sequence = fields.Integer(string='Sequence')
     active = fields.Boolean(default=True,
                             help="If the active field is set to False, it will allow you to hide the project without removing it.")
-    code = fields.Char(string="Project Code")
-    name = fields.Char(string="Project Name")
-    name_path = fields.Char(string="Project Name", compute='_compute_name_path', store=True)
-    project_id = fields.Many2one("kcms.project", string="Parent Project", ondelete='restrict')
-    project_ids = fields.One2many('kcms.project', 'project_id', string='Sub Projects')
+    code = fields.Char(string="Project Code: ")
+    name = fields.Char(string="Project/Block: ")
+    name_path = fields.Char(string="Project Name: ", compute='_compute_name_path', store=True)
+    project_id = fields.Many2one("kcms.project", string="Parent Project: ", ondelete='restrict')
+    project_ids = fields.One2many('kcms.project', 'project_id', string='Sub Projects: ')
     parent_path = fields.Char(index=True)
-    partner_id_owner = fields.Many2one('res.partner', string='The Owner')
-    partner_id_FPC = fields.Many2one('res.partner', string='First Point Contact')
-    user_id = fields.Many2one('res.users', string='Project Manager', tracking=True)
+    user_id = fields.Many2one('res.users', string='Project Manager: ', tracking=True)
     attachment_number = fields.Integer('Number of Attachments', compute='_compute_attachment_number')
+
+    ## Project/Block Informtion
+    partner_id_owner = fields.Char(string='Name of owner: ')
+    partner_id_FPC = fields.Char(string='Full name: ')
+    contact_person = fields.Char(string="Contact Person: ")
+    project_address = fields.Char(string="Address: ")
+    project_name = fields.Char(string="小区名字: ")
+    building_work = fields.Char(string="Building work: ")
+    block_work = fields.Char(string="Block work: ")
+    building_concent = fields.Char(string="Building concent num: ")
+    lot_range = fields.Char(string="Lot Range: ")
+    start_date = fields.Date(string="Start Date: ")
+    estimated_completion_date = fields.Date(string="Est. Completion Date: ")
+    rc_number = fields.Char(string="R.C. No.")
+    EPA = fields.Char(string="EPA: ")
+
+    mailing_address = fields.Char(string="Mailing address: ")
+    email_address = fields.Char(string="Email address: ")
+    street_address = fields.Char(string="Street address/ registered office: ")
+    day_time_phone = fields.Char(string="Day time phone: ")
+    mobile_number = fields.Char(string="Mobile: ")
+    after_hours = fields.Char(string="After hours: ")
+    facsimile = fields.Char(string="Facsimile: ")
+    comments = fields.Char(string="Comments: ")
+    electricity = fields.Boolean(default=False, string="Electricity")
+    lbp_status = fields.Boolean(default=False, string="LBP")
+    water = fields.Boolean(default=False, string="Water")
+    gas = fields.Boolean(default=False, string="Gas")
+    network = fields.Boolean(default=False, string="Network")
+    VC = fields.Boolean(default=False, string="VC")
+    # test = fields.selection((('n', 'Unconfirmed'), ('c', 'Confirmed')), string='Selection field')
+    vc_state = fields.Selection(
+        selection=[
+            ('Yes', 'Yes'),
+            ('No', 'No'),
+            ('NA', 'NA'),
+        ], string="VC status"
+    )
+
+    lbp_comments = fields.Char(string="LBP comments: ")
+    lbp_date = fields.Date(string="LBP Date: ")
+    gas_comments = fields.Char(string="Gas comments: ")
+    gas_date = fields.Date(string="Gas Date: ")
+    water_comments = fields.Char(string="Water comments: ")
+    water_date = fields.Date(string="Water Date: ")
+    electricity_comments = fields.Char(string="Electricity comments: ")
+    electricity_date = fields.Date(string="Electricity Date: ")
+    network_comments = fields.Char(string="Network comments: ")
+    network_date = fields.Date(string="Network Date: ")
+    VC_comments = fields.Char(string="VC comments: ")
+    VC_date = fields.Date(string="VC Date: ")
+
+
+    # Our Project Manager
 
     @api.model
     def create(self, vals):
         res = super(KCMSProject, self).create(vals)
         if not vals['project_id']:
             self.env['kcms.project'].create({
-                'code': res.code+'GE',
+                'code': res.code + 'GE',
                 'name': 'General',
                 'project_id': res.id
             })
@@ -122,7 +173,7 @@ class KCMSProject(models.Model):
                 if sub_item[0].value:
                     quantity = 0 if sub_item[2].value == '' else sub_item[2].value
                     rate = 0 if sub_item[4].value == '' else sub_item[4].value
-                    sub_total = float(quantity)*float(rate)
+                    sub_total = float(quantity) * float(rate)
 
                     subbase_id = self.env['kcms.project.item.base'].search([('code', '=', sub_item[0].value)])
                     if not subbase_id.code:
