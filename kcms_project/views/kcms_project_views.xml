@@ -26,18 +26,16 @@
                                 <field name="name_path"/>
                                 <field name="project_id"/>
                                 <field name="project_address"/>
-                                <field name="project_name"/>
+                                <field name="project_name" attrs="{'invisible': [('project_id', '!=', False)]}"/>
                             </group>
                             <group>
-<!--                                <field name="partner_id_owner"/>-->
-<!--                                <field name="partner_id_FPC"/>-->
-<!--                                <field name="user_id" widget="many2one_avatar_user"/>-->
                                 <field name="lot_range" attrs="{'invisible': [('project_id', '=', False)]}"/>
                                 <field name="building_concent" attrs="{'invisible': [('project_id', '=', False)]}"/>
-                                <field name="start_date" attrs="{'invisible': [('project_id', '=', False)]}"/>
-                                <field name="estimated_completion_date" attrs="{'invisible': [('project_id', '=', False)]}"/>
+                                <field name="start_date" attrs="{'invisible': [('project_id', '!=', False)]}"/>
+                                <field name="estimated_completion_date" attrs="{'invisible': [('project_id', '!=', False)]}"/>
                                 <field name="rc_number" attrs="{'invisible': [('project_id', '!=', False)]}"/>
                                 <field name="EPA" attrs="{'invisible': [('project_id', '!=', False)]}"/>
+<!--                                <field name="vc_state" attrs="{'invisible': [('project_id', '!=', False)]}"/>-->
                             </group>
                             <group>
                                 <field name="building_work" attrs="{'invisible': [('project_id', '!=', False)]}"/>
@@ -95,77 +93,16 @@
                                     </group>
                                 </group>
                             </page>
-                        </notebook>
-                        <notebook attrs="{'invisible': [('project_id', '=', False)]}">
-                            <page string="Inspection Status">
-                                <group>
-                                    <group>
-                                        <field name="lbp_status"/>
-                                        <span>Comments: </span>
-                                        <div class="o_row oe_inline" attrs="{'invisible': [('lbp_status', '=', False)]}">
-                                            <field name="lbp_comments" class="oe_inline"/>
-                                        </div>
-                                        <span>Completion date: </span>
-                                        <div class="o_row oe_inline" attrs="{'invisible': [('lbp_status', '=', False)]}">
-                                            <field name="lbp_date" class="oe_inline"/>
-                                        </div>
-                                    </group>
-                                    <group>
-                                        <field name="water"/>
-                                         <span>Comments: </span>
-                                        <div class="o_row oe_inline" attrs="{'invisible': [('water', '=', False)]}">
-                                            <field name="water_comments" class="oe_inline"/>
-                                        </div>
-                                        <span>Completion date: </span>
-                                        <div class="o_row oe_inline" attrs="{'invisible': [('water', '=', False)]}">
-                                            <field name="water_date" class="oe_inline"/>
-                                        </div>
-                                    </group>
-                                    <group>
-                                        <field name="gas"/>
-                                         <span>Comments: </span>
-                                        <div class="o_row oe_inline" attrs="{'invisible': [('gas', '=', False)]}">
-                                            <field name="gas_comments" class="oe_inline"/>
-                                        </div>
-                                        <span>Completion date: </span>
-                                        <div class="o_row oe_inline" attrs="{'invisible': [('gas', '=', False)]}">
-                                            <field name="gas_date" class="oe_inline"/>
-                                        </div>
-                                    </group>
-                                    <group>
-                                        <field name="electricity"/>
-                                        <span>Comments: </span>
-                                        <div class="o_row oe_inline" attrs="{'invisible': [('electricity', '=', False)]}">
-                                            <field name="electricity_comments" class="oe_inline"/>
-                                        </div>
-                                        <span>Completion date: </span>
-                                        <div class="o_row oe_inline" attrs="{'invisible': [('electricity', '=', False)]}">
-                                            <field name="electricity_date" class="oe_inline"/>
-                                        </div>
-                                    </group>
-                                    <group>
-                                        <field name="network"/>
-                                        <span>Comments: </span>
-                                        <div class="o_row oe_inline" attrs="{'invisible': [('network', '=', False)]}">
-                                            <field name="comments" class="oe_inline"/>
-                                        </div>
-                                        <span>Completion date: </span>
-                                        <div class="o_row oe_inline" attrs="{'invisible': [('network', '=', False)]}">
-                                            <field name="start_date" class="oe_inline"/>
-                                        </div>
-                                    </group>
-                                    <group>
-                                        <field name="vc_state"/>
-                                        <span>Comments: </span>
-                                        <div class="o_row oe_inline">
-                                            <field name="VC_comments" class="oe_inline"/>
-                                        </div>
-                                        <span>Completion date: </span>
-                                        <div class="o_row oe_inline">
-                                            <field name="VC_date" class="oe_inline"/>
-                                        </div>
-                                    </group>
-                                </group>
+                            <page string="Must Do">
+                                <field name="list_id">
+                                    <tree editable="bottom">
+                                        <field name="task_ids"/>
+                                        <field name="task_status"/>
+                                        <field name="principle_user"/>
+                                        <field name="comp_date"/>
+                                        <field name="comment"/>
+                                    </tree>
+                                </field>
                             </page>
                         </notebook>
                     </sheet>
@@ -241,6 +178,24 @@
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
                     Add a new project
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel porttitor eros,
+                    nec interdum erat. Phasellus nunc ligula, euismod eu pellentesque quis,
+                    facilisis eu felis. Donec consequat eros sit amet ligula bibendum blandit.
+                    Proin facilisis, eros vitae tristique gravida, dolor dolor scelerisque nisi,
+                    quis imperdiet libero turpis viverra odio. Sed sit amet mattis enim.
+                </p>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_kcms_mustdo_list">
+            <field name="name">Must Do Library</field>
+            <field name="res_model">kcms.project.must.do.tasks</field>
+            <field name="view_mode">tree</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Import or create your construction project item
                 </p>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel porttitor eros,

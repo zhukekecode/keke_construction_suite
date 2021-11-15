@@ -20,19 +20,19 @@ class KCMSProject(models.Model):
                             help="If the active field is set to False, it will allow you to hide the project without removing it.")
     code = fields.Char(string="Project Code: ")
     name = fields.Char(string="Project/Block: ")
-    name_path = fields.Char(string="Project Name: ", compute='_compute_name_path', store=True)
+    name_path = fields.Char(string="Internal Ref.: ", compute='_compute_name_path', store=True)
     project_id = fields.Many2one("kcms.project", string="Parent Project: ", ondelete='restrict')
     project_ids = fields.One2many('kcms.project', 'project_id', string='Sub Projects: ')
     parent_path = fields.Char(index=True)
     user_id = fields.Many2one('res.users', string='Project Manager: ', tracking=True)
     attachment_number = fields.Integer('Number of Attachments', compute='_compute_attachment_number')
-
+    item_ids = fields.One2many('kcms.project.must.do', 'list_ids', string='test**')
     ## Project/Block Informtion
     partner_id_owner = fields.Char(string='Name of owner: ')
     partner_id_FPC = fields.Char(string='Full name: ')
     contact_person = fields.Char(string="Contact Person: ")
     project_address = fields.Char(string="Address: ")
-    project_name = fields.Char(string="小区名字: ")
+    project_name = fields.Char(string="Project Name: ")
     building_work = fields.Char(string="Building work: ")
     block_work = fields.Char(string="Block work: ")
     building_concent = fields.Char(string="Building concent num: ")
@@ -50,34 +50,7 @@ class KCMSProject(models.Model):
     after_hours = fields.Char(string="After hours: ")
     facsimile = fields.Char(string="Facsimile: ")
     comments = fields.Char(string="Comments: ")
-    electricity = fields.Boolean(default=False, string="Electricity")
-    lbp_status = fields.Boolean(default=False, string="LBP")
-    water = fields.Boolean(default=False, string="Water")
-    gas = fields.Boolean(default=False, string="Gas")
-    network = fields.Boolean(default=False, string="Network")
-    VC = fields.Boolean(default=False, string="VC")
-    # test = fields.selection((('n', 'Unconfirmed'), ('c', 'Confirmed')), string='Selection field')
-    vc_state = fields.Selection(
-        selection=[
-            ('Yes', 'Yes'),
-            ('No', 'No'),
-            ('NA', 'NA'),
-        ], string="VC status"
-    )
-
-    lbp_comments = fields.Char(string="LBP comments: ")
-    lbp_date = fields.Date(string="LBP Date: ")
-    gas_comments = fields.Char(string="Gas comments: ")
-    gas_date = fields.Date(string="Gas Date: ")
-    water_comments = fields.Char(string="Water comments: ")
-    water_date = fields.Date(string="Water Date: ")
-    electricity_comments = fields.Char(string="Electricity comments: ")
-    electricity_date = fields.Date(string="Electricity Date: ")
-    network_comments = fields.Char(string="Network comments: ")
-    network_date = fields.Date(string="Network Date: ")
-    VC_comments = fields.Char(string="VC comments: ")
-    VC_date = fields.Date(string="VC Date: ")
-
+    list_id = fields.One2many('kcms.project.must.do', 'list_ids', string='List Tasks')
 
     # Our Project Manager
 
@@ -88,8 +61,14 @@ class KCMSProject(models.Model):
             self.env['kcms.project'].create({
                 'code': res.code + 'GE',
                 'name': 'General',
-                'project_id': res.id
+                'project_id': res.id,
             })
+            print(self.env['kcms.project.must.do.tasks'].search([]))
+            for task in self.env['kcms.project.must.do.tasks'].search([]):
+                self.env['kcms.project.must.do'].create({
+                    'list_ids': res.id,
+                    'task_ids': task.id,
+                })
         return res
 
     @onchange('code', 'project_id')
@@ -191,3 +170,36 @@ class KCMSProject(models.Model):
                         'sub_total': format(sub_total, '.2f'),
                         'item_id': item.id,
                     })
+
+
+
+
+class KCMSProjectMustDo(models.Model):
+    _name = "kcms.project.must.do"
+    _description = "keke construction management system (must do list) -- must do list"
+
+    list_ids = fields.Many2one("kcms.project", string="Must Do List: ")
+    task_ids = fields.Many2one("kcms.project.must.do.tasks", string="Task")
+    task_status = fields.Selection(
+        selection=[
+            ('Yes', 'Yes'),
+            ('No', 'No'),
+            ('NA', 'NA'),
+        ], string="Task Status"
+    )
+
+    comp_date = fields.Date(string="Completion Date")
+    principle_user = fields.Many2one('res.users', string='People in charge')
+    comment = fields.Text(string="Comment")
+
+    @api.onchange('comp_date', 'comment')
+    def _onchange_principle_user(self):
+        self.principle_user = self.env.user
+
+
+class KCMSProjectMustDoTasks(models.Model):
+    _name = "kcms.project.must.do.tasks"
+    _description = "keke construction management system (must do list tasks) -- must do list tasks"
+
+    name = fields.Char(string="name")
+    sequence = fields.Integer(string='Sequence')

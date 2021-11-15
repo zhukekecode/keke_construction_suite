@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "kcms_project",
+    'name': "kcms_inspection",
 
     'summary': """
-        Project module of KCMS(KEKE Construction Project Management System)""",
+        Construction inspection module of KCMS(KEKE Construction Project Management System)
+        """,
 
     'description': """
-        Project module of KCMS(KEKE Construction Project Management System)""",
+        Construction inspection module of KCMS(KEKE Construction Project Management System)
+    """,
 
     'author': "Lindsay Zhang & Jianzhuo Shen",
     'website': "http://www.zhukeke.co.nz",
@@ -23,21 +25,14 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
-        'views/kcms_project_views.xml',
-        'views/kcms_project_item_base_views.xml',
-        'views/kcms_project_item_views.xml',
-        'views/kcms_project_menuitem.xml',
-        'views/assets.xml',
-        'data/project_mustdo_data.xml',
-
+        'views/kcms_inspection_menuitem.xml',
+        'views/kcms_inspection_task_views.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',
     ],
-    'qweb': [
-        "static/src/xml/widget_template.xml",
-    ],
+
     'installable': True,
     'application': True,
     'auto_install': False,

@@ -5,4 +5,5 @@
     <menuitem name="Item Details" id="menu_kcms_project_frame" parent="menu_kcms_project_root" action="action_kcms_project_item_list"/>
     <menuitem name="Configuration" id="menu_kcms_project_configuration" parent="menu_kcms_project_root"/>
     <menuitem name="Item Library" id="menu_kcms_project_itemlibrary" parent="menu_kcms_project_configuration" action="action_kcms_project_item_base_list"/>
+    <menuitem name="Must Do Library" id="menu_kcms_project_mustdolibrary" parent="menu_kcms_project_configuration" action="action_kcms_mustdo_list"/>
 </odoo>

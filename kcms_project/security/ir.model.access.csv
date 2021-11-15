@@ -3,3 +3,5 @@ access_kcms_project,kcms.project,model_kcms_project,base.group_user,1,1,1,1
 access_kcms_project_item_base,kcms.project.item.base,model_kcms_project_item_base,base.group_user,1,1,1,1
 access_kcms_project_item,kcms.project.item,model_kcms_project_item,base.group_user,1,1,1,1
 access_kcms_project_subitem,kcms.project.subitem,model_kcms_project_subitem,base.group_user,1,1,1,1
+access_kcms_project_must_do,kcms.project.must.do,model_kcms_project_must_do,base.group_user,1,1,1,1
+access_kcms_project_must_do_tasks,kcms.project.must.do.tasks,model_kcms_project_must_do_tasks,base.group_user,1,1,1,1
