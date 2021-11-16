@@ -19,7 +19,19 @@
     'version': '14.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base',
+                'kcms_project',
+                'analytic',
+                'base_setup',
+                'mail',
+                'portal',
+                'rating',
+                'resource',
+                'web',
+                'web_tour',
+                'digest',
+                'hr',
+                ],
 
     # always loaded
     'data': [

@@ -18,7 +18,18 @@
     'version': '14.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base',
+                'analytic',
+                'base_setup',
+                'mail',
+                'portal',
+                'rating',
+                'resource',
+                'web',
+                'web_tour',
+                'digest',
+                'hr',
+                ],
 
     # always loaded
     'data': [
@@ -29,7 +40,7 @@
         'views/kcms_project_menuitem.xml',
         'views/assets.xml',
         'data/project_mustdo_data.xml',
-        # 'data/hr_department_data.xml',
+        'data/hr_department_data.xml',
 
     ],
     # only loaded in demonstration mode

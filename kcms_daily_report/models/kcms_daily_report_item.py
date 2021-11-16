@@ -14,10 +14,10 @@ class KCMSDailyReportItem(models.Model):
 
     list_ids = fields.Many2one('kcms.daily.report', string='List Items', ondelete='cascade')
     kcms_project_id = fields.Many2one("kcms.project", string="Project", ondelete='cascade')
-    kcms_project_item_base_id = fields.Many2one("kcms.project.item.base", string="Task", ondelete='restrict')
+    kcms_project_item_base_id = fields.Many2one("kcms.project.item.base", string="Task", ondelete='restrict', required='1')
     working_hours = fields.Float(string="Total Time", required='1', group_operator=False)
-    # user_ids = fields.Many2many('hr.employee', string='Group Members')
-    user_ids = fields.Many2many('res.users', string='Group Members')
+    user_ids = fields.Many2many('hr.employee', string='Group Members',
+                                domain=[('department_id.name', '=', 'Construction')])
 
     @api.constrains('working_hours')
     def check_work_time(self):
