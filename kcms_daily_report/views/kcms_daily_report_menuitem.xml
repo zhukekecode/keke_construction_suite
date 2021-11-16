@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem name="Daily Report" id="menu_kcms_daily_report_root" web_icon="kcms_daily_report,static/description/icon.png"/>
+    <menuitem name="Construction Report" id="menu_kcms_daily_report" parent="menu_kcms_daily_report_root"/>
+    <menuitem name="My Report" id="menu_kcms_daily_report_my" parent="menu_kcms_daily_report" action="action_kcms_daily_report_my"/>
+    <menuitem name="All Report" id="menu_kcms_daily_report_all" parent="menu_kcms_daily_report" action="action_kcms_daily_report_all"/>
+</odoo>

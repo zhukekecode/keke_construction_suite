@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "kcms_project",
+    'name': "Daily Report",
 
     'summary': """
-        Project module of KCMS(KEKE Construction Project Management System)""",
+        Project module of KCMS(KEKE Construction Project Daily Report System)""",
 
     'description': """
-        Project module of KCMS(KEKE Construction Project Management System)""",
+        Project module of KCMS(KEKE Construction Project Daily Report System)
+    """,
 
     'author': "Lindsay Zhang & Jianzhuo Shen",
     'website': "http://www.zhukeke.co.nz",
@@ -23,21 +24,13 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
-        'views/kcms_project_views.xml',
-        'views/kcms_project_item_base_views.xml',
-        'views/kcms_project_item_views.xml',
-        'views/kcms_project_menuitem.xml',
-        'views/assets.xml',
-        'data/project_mustdo_data.xml',
-        # 'data/hr_department_data.xml',
-
+        'views/kcms_daily_report_all_views.xml',
+        'views/kcms_daily_report_my_views.xml',
+        'views/kcms_daily_report_menuitem.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',
-    ],
-    'qweb': [
-        "static/src/xml/widget_template.xml",
     ],
     'installable': True,
     'application': True,
