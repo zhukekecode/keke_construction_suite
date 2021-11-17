@@ -12,7 +12,7 @@ class KCMSDailyReportItem(models.Model):
     _name = 'kcms.daily.report.item'
     _description = 'keke construction management system (daily report) -- Daily Report'
 
-    list_ids = fields.Many2one('kcms.daily.report', string='List Items', ondelete='cascade')
+    list_ids = fields.Many2one('kcms.daily.report', string='List Item', ondelete='cascade')
     kcms_project_id = fields.Many2one("kcms.project", string="Project", ondelete='cascade')
     kcms_project_item_base_id = fields.Many2one("kcms.project.item.base", string="Task", ondelete='restrict', required='1')
     working_hours = fields.Float(string="Total Time", required='1', group_operator=False)
@@ -20,6 +20,7 @@ class KCMSDailyReportItem(models.Model):
                                 domain=[('department_id.name', '=', 'Construction')])
 
     @api.constrains('working_hours')
-    def check_work_time(self):
-        if self.working_hours <= 0 or self.working_hours > 24:
-            raise ValidationError('Check your working time.')
+    def check_work_hours(self):
+        for item in self:
+            if item.working_hours <= 0 or item.working_hours > 24:
+                raise ValidationError('Check your working hours.')

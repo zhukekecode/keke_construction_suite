@@ -21,15 +21,6 @@
     # any module necessary for this one to work correctly
     'depends': ['base',
                 'kcms_project',
-                'analytic',
-                'base_setup',
-                'mail',
-                'portal',
-                'rating',
-                'resource',
-                'web',
-                'web_tour',
-                'digest',
                 'hr',
                 ],
 
