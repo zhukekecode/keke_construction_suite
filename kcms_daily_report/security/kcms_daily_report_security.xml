@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="module_category_kcms_daily_report" model="ir.module.category">
+        <field name="name">KCMS Daily Report</field>
+        <field name="sequence">3</field>
+    </record>
+
+    <record id="group_kcms_daily_report_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="category_id" ref="module_category_kcms_daily_report"/>
+    </record>
+
+    <record id="group_kcms_daily_report_manager" model="res.groups">
+        <field name="name">Daily Report Manager</field>
+        <field name="implied_ids" eval="[(4, ref('group_kcms_daily_report_user'))]"/>
+        <field name="category_id" ref="module_category_kcms_daily_report"/>
+    </record>
+
+    <record model="ir.ui.menu" id="menu_kcms_daily_report_all">
+        <field name="name">menu_kcms_daily_report_all</field>
+        <field name="groups_id" eval="[(6,0,[ref('group_kcms_daily_report_user'),ref('group_kcms_daily_report_manager')])]"/>
+        <field name="sequence">1</field>
+    </record>
+
+    <record model="ir.ui.menu" id="menu_kcms_daily_report_my">
+        <field name="name">menu_kcms_daily_report_my</field>
+        <field name="groups_id" eval="[(6,0,[ref('group_kcms_daily_report_manager')]),]"/>
+        <field name="sequence">1</field>
+    </record>
+</odoo>
