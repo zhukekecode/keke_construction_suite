@@ -12,6 +12,7 @@
                                 <field name="code"/>
                                 <field name="name"/>
                                 <field name="discription"/>
+                                <field name = "blue"/>
                             </group>
                         </group>
                     </sheet>

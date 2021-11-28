@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hero_purchase_site,hero_purchase.site,model_hero_purchase_site,base.group_user,1,1,1,1
+access_hero_purchase_site_item,hero_purchase.site_item,model_hero_purchase_site_item,base.group_user,1,1,1,1

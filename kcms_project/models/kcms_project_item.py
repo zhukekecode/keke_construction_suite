@@ -17,6 +17,7 @@ class KCMSProjectItemBase(models.Model):
     UOM = fields.Char(string="UOM", default="N/A")
     itembase_id = fields.Many2one("kcms.project.item.base", string="Parent Item", ondelete='cascade')
     itembase_ids = fields.One2many('kcms.project.item.base', 'itembase_id', string='Sub Item')
+    blue = fields.Boolean('Blue', default="False")
 
 
 class KCMSProjectItem(models.Model):

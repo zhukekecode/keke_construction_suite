@@ -24,9 +24,9 @@
 
     # always loaded
     'data': [
-        'security/ir.model.access.csv',
-        'views/kcms_inspection_menuitem.xml',
-        'views/kcms_inspection_task_views.xml',
+        # 'security/ir.model.access.csv',
+        # 'views/kcms_inspection_menuitem.xml',
+        # 'views/kcms_inspection_task_views.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
