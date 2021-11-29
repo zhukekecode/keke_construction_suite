@@ -26,7 +26,6 @@
                             <field name="user_id"/>
                             <field name="submit_date"/>
                             <field name="working_date"/>
-                            <field name="list_id"/>
                             <field name="notes"/>
                         </group>
                         <notebook>
