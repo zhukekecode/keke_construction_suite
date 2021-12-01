@@ -12,7 +12,8 @@
                                 <field name="code"/>
                                 <field name="name"/>
                                 <field name="discription"/>
-                                <field name = "blue"/>
+                                <field name="daily_report"/>
+                                <field name="site_purchase"/>
                             </group>
                         </group>
                     </sheet>

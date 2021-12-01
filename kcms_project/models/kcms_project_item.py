@@ -8,7 +8,7 @@ from odoo.exceptions import UserError, ValidationError
 class KCMSProjectItemBase(models.Model):
     _name = "kcms.project.item.base"
     _description = "keke construction management system (project) -- ItemBase"
-    _rec_name = 'code'
+    # _rec_name = 'code'
 
     sequence = fields.Integer(string='Sequence')
     code = fields.Char(string="Item Code")
@@ -17,7 +17,8 @@ class KCMSProjectItemBase(models.Model):
     UOM = fields.Char(string="UOM", default="N/A")
     itembase_id = fields.Many2one("kcms.project.item.base", string="Parent Item", ondelete='cascade')
     itembase_ids = fields.One2many('kcms.project.item.base', 'itembase_id', string='Sub Item')
-    blue = fields.Boolean('Blue', default="False")
+    daily_report = fields.Boolean(string='Daily Report', default=True)
+    site_purchase = fields.Boolean(string='Site Purchase', default=True)
 
 
 class KCMSProjectItem(models.Model):
