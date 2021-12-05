@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem name="Hero Purchase" id="menu_kcms_site_purchase_root" web_icon="keke_site_purchase,static/description/icon.png"/>
+    <menuitem name="Site Purchase" id="menu_kcms_site_purchase" parent="menu_kcms_site_purchase_root"/>
+    <menuitem name="All Purchase" id="menu_kcms_site_purchase_all" parent="menu_kcms_site_purchase" action="action_kcms_site_purchase_all"/>
+    <menuitem name="My Purchase" id="hmenu_kcms_site_purchase_my" parent="menu_kcms_site_purchase" action="action_kcms_site_purchase_my"/>
+</odoo>

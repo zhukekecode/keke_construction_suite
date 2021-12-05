@@ -1,0 +1,108 @@
+<odoo>
+  <data>
+      <!--search all-->
+        <record model="ir.ui.view" id="search_site_purchase_all">
+            <field name="name">hero_purchase.site.search.all</field>
+            <field name="model">kcms.site.purchase</field>
+            <field name="arch" type="xml">
+                <search>
+                    <filter string="Today Submit" name="today"
+                            domain="[('submit_date','&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))),('submit_date','&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]"/>
+                    <filter name="groupby_date" string="Date" context="{'group_by': 'submit_date'}"/>
+                    <filter name="groupby_submitter" string="Submitter" context="{'group_by': 'user_id'}"/>
+<!--                    <filter name="groupby_status" string="Status" context="{'group_by': 'status'}"/>-->
+                </search>
+            </field>
+        </record>
+
+       <!-- list view all-->
+        <record model="ir.ui.view" id="view_kcms_site_purchase_list_all">
+            <field name="name">Site Purchase List View</field>
+            <field name="model">kcms.site.purchase</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="po_number"/>
+                    <field name="user_id"/>
+                    <field name="submit_date"/>
+                    <field name="purchase_date"/>
+                    <field name = "item_ids"/>
+<!--                    <field name="status"/>-->
+                </tree>
+            </field>
+        </record>
+
+        <!-- form view all-->
+        <record model="ir.ui.view" id="view_kcms_site_purchase_form_all">
+            <field name="name">Site Purchase Form View</field>
+            <field name="model">kcms.site.purchase</field>
+            <field name="arch" type="xml">
+                <form>
+<!--                    <header>-->
+<!--                        <field name="status" widget="statusbar" options="{'clickable': '1'}"/>-->
+<!--                    </header>-->
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="po_number" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="user_id"/>
+                            <field name="submit_date"/>
+                            <field name="purchase_date"/>
+                        </group>
+                        <group>
+                            <field name="note"/>
+                            <field name="attachment_id" widget="many2many_binary"/>
+                        </group>
+                        <notebook>
+                            <page string="Details">
+                                <field name="item_ids">
+                                    <tree editable="bottom">
+                                        <field name="kcms_project_id"/>
+                                        <field name="kcms_project_item_base_id"/>
+                                        <field name="item"/>
+                                        <field name="quantity"/>
+                                        <field name="unit"/>
+                                        <field name="price"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+      </record>
+
+        <!-- actions opening views on models -->
+      <record model="ir.actions.act_window" id="action_kcms_site_purchase_all">
+          <field name="name">All Site Purchase</field>
+          <field name="res_model">kcms.site.purchase</field>
+          <field name="view_mode">tree,form</field>
+          <field name="context">{'search_default_today': 1}</field>
+          <field name="search_view_id" ref="search_site_purchase_all"/>
+          <field name="view_ids"
+                 eval="[
+                       (5, 0, 0),
+                       (0, 0, {'view_mode': 'tree', 'view_id': ref('view_kcms_site_purchase_list_all')}),
+                       (0, 0, {'view_mode': 'form', 'view_id': ref('view_kcms_site_purchase_form_all')}),
+                   ]"/>
+          <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                  Import or create your construction project item
+              </p>
+              <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel porttitor eros,
+                  nec interdum erat. Phasellus nunc ligula, euismod eu pellentesque quis,
+                  facilisis eu felis. Donec consequat eros sit amet ligula bibendum blandit.
+                  Proin facilisis, eros vitae tristique gravida, dolor dolor scelerisque nisi,
+                  uis imperdiet libero turpis viverra odio. Sed sit amet mattis enim.
+              </p>
+          </field>
+      </record>
+  </data>
+</odoo>

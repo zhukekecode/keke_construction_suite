@@ -34,7 +34,7 @@
                                     <tree editable="bottom">
                                         <field name="kcms_project_id"
                                                options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"/>
-                                        <field name="kcms_project_item_base_id"/>
+                                        <field name="kcms_project_item_base_id" domain="[('daily_report','!=', False)]"/>
                                         <field name="working_hours" widget="float time"/>
                                         <field name="user_ids" widget="many2many_tags"/>
                                     </tree>
@@ -52,8 +52,6 @@
             <field name="name">All Daily Report</field>
             <field name="res_model">kcms.daily.report</field>
             <field name="view_mode">tree,form</field>
-<!--            <field name="context">{'search_default_today': 1}</field>-->
-<!--            <field name="search_view_id" ref="hero_purchase.site_search_all"/>-->
             <field name="view_ids"
                    eval="[
                         (5, 0, 0),
