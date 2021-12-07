@@ -2,10 +2,6 @@
 
 import base64
 from odoo import api, fields, models, _, tools
-from odoo.api import onchange
-import datetime
-import pytz
-from odoo.exceptions import ValidationError, UserError
 
 
 class KCMSDailyReport(models.Model):
