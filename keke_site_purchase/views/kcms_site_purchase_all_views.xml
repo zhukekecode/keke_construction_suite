@@ -1,6 +1,6 @@
 <odoo>
   <data>
-      <!--search all-->
+        <!-- search all -->
         <record model="ir.ui.view" id="search_site_purchase_all">
             <field name="name">hero_purchase.site.search.all</field>
             <field name="model">kcms.site.purchase</field>
@@ -15,7 +15,7 @@
             </field>
         </record>
 
-       <!-- list view all-->
+        <!-- list view all-->
         <record model="ir.ui.view" id="view_kcms_site_purchase_list_all">
             <field name="name">Site Purchase List View</field>
             <field name="model">kcms.site.purchase</field>
@@ -78,7 +78,7 @@
             </field>
       </record>
 
-        <!-- actions opening views on models -->
+      <!-- actions opening views on models -->
       <record model="ir.actions.act_window" id="action_kcms_site_purchase_all">
           <field name="name">All Site Purchase</field>
           <field name="res_model">kcms.site.purchase</field>

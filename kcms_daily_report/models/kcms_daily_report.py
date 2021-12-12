@@ -13,9 +13,3 @@ class KCMSDailyReport(models.Model):
     working_date = fields.Date(string='Working Date')
     notes = fields.Text(string='Notes')
     list_id = fields.One2many('kcms.daily.report.item', 'list_ids', string='List Records')
-
-
-
-
-
-
