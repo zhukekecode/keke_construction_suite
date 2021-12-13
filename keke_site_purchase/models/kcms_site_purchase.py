@@ -19,7 +19,7 @@ class KCMSSitePurchase(models.Model):
                               default=lambda self: datetime.datetime.now(pytz.timezone(self.env.user.tz)).date(),
                               require='1')
     item_ids = fields.One2many('kcms.site.purchase.item', 'purchase_id', string='Purchase Items')
-    status = fields.Selection([('to_process', '进行中'), ('is_completed', '已完成'), ('Approved', '已审批')],string="status", default='to_process')
+    status = fields.Selection([('to_process', '进行中'), ('is_completed', '已完成'), ('Approved', '已审批')], string="status", default='to_process')
     attachment_id = fields.Many2many('ir.attachment', string="Invoice")
 
     @api.model

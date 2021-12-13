@@ -20,24 +20,13 @@
     'version': '14.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base',
-                'analytic',
-                'base_setup',
-                'mail',
-                'portal',
-                'rating',
-                'resource',
-                'web',
-                'web_tour',
-                'digest',
-                'hr',
-                'kcms_project',
-                ],
+    'depends': ['base', 'kcms_project'],
 
     # only loaded in demonstration mode
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'security/keke_site_purchase_security.xml',
         'views/kcms_site_purchase_all_views.xml',
         'views/kcms_site_purchase_my_views.xml',
         'views/kcms_site_purchase_menuitem.xml',

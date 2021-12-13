@@ -34,6 +34,7 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'security/kcms_project_security.xml',
         'views/kcms_project_views.xml',
         'views/kcms_project_item_base_views.xml',
         'views/kcms_project_item_views.xml',
