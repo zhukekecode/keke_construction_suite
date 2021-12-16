@@ -48,7 +48,9 @@
                             <page string="Details">
                                 <field name="item_ids">
                                     <tree editable="bottom">
-                                        <field name="kcms_project_id"/>
+                                        <field name="kcms_project_id"
+                                               options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"
+                                               widget="selection"/>
                                         <field name="kcms_project_item_base_id" domain="[('daily_report','!=', False)]"/>
                                         <field name="item"/>
                                         <field name="quantity"/>

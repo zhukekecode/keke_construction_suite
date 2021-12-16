@@ -35,7 +35,7 @@ class KCMSProject(models.Model):
     project_name = fields.Char(string="Project Name: ")
     building_work = fields.Char(string="Building work: ")
     block_work = fields.Char(string="Block work: ")
-    building_concent = fields.Char(string="Building concent num: ")
+    building_concent = fields.Char(string="BCO: ")
     lot_range = fields.Char(string="Lot Range: ")
     start_date = fields.Date(string="Start Date: ")
     estimated_completion_date = fields.Date(string="Est. Completion Date: ")
@@ -52,8 +52,10 @@ class KCMSProject(models.Model):
     comments = fields.Char(string="Comments: ")
     list_id = fields.One2many('kcms.project.must.do', 'list_ids', string='List Tasks')
 
-    # Our Project Manager
+    user_ids = fields.Many2many('hr.employee', string='Project Managers: ',
+                                domain=[('department_id.name', '=', 'Construction')])
 
+    # Our Project Manager
     @api.model
     def create(self, vals):
         res = super(KCMSProject, self).create(vals)
@@ -172,8 +174,6 @@ class KCMSProject(models.Model):
                     })
 
 
-
-
 class KCMSProjectMustDo(models.Model):
     _name = "kcms.project.must.do"
     _description = "keke construction management system (must do list) -- must do list"
@@ -183,6 +183,7 @@ class KCMSProjectMustDo(models.Model):
     task_status = fields.Selection(
         selection=[
             ('Yes', 'Yes'),
+            ('Pending', 'Pending'),
             ('No', 'No'),
             ('NA', 'NA'),
         ], string="Task Status"
