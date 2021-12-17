@@ -8,6 +8,7 @@
                 <form string="Project">
                     <header>
                         <widget name="import_estimate" string="Import Estimate Statement" highlight="1"/>
+                        <field name="status" widget="statusbar" options="{'clickable': '1'}"/>
                     </header>
                     <sheet>
                         <div class="oe_button_box" name="button_box">
@@ -120,6 +121,7 @@
                     <field name="project_address"/>
                     <field name="start_date"/>
                     <field name="estimated_completion_date"/>
+                    <field name="status"/>
                 </tree>
             </field>
         </record>
@@ -129,13 +131,21 @@
             <field name="model">kcms.project</field>
             <field name="arch" type="xml">
                 <search>
+                    <filter name="groupby_status" string="Status" context="{'group_by': 'status'}"/>
                     <field name="name" filter_domain="[('name','like',self)]"/>
+                    <filter name="status_planning" string="Status:Planning"
+                            domain="[('status', '=', 'to_planning')]"/>
+                    <filter name="status_processing" string="Status:Processing"
+                            domain="[('status', '=', 'to_process')]"/>
+                    <filter name="status_completed" string="Status:Completed"
+                            domain="[('status', '=', 'is_completed')]"/>
                     <searchpanel>
                         <field name="project_id" icon="fa-list" string="Projects" enable_counters="1"/>
                     </searchpanel>
                 </search>
             </field>
         </record>
+
 
         <!-- Kanban View Project -->
         <record id="view_kcms_project_kanban" model="ir.ui.view">

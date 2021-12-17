@@ -1,6 +1,20 @@
 <odoo>
     <data>
-        <!-- Daily Report List View All -->
+        <!-- Daily Report search my -->
+        <record model="ir.ui.view" id="search_site_purchase_all">
+            <field name="name">Daily Report search all</field>
+            <field name="model">kcms.daily.report</field>
+            <field name="arch" type="xml">
+                <search>
+                    <filter string="Today Submit" name="today"
+                            domain="[('submit_date','&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))),('submit_date','&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]"/>
+                    <filter name="groupby_date" string="Date" context="{'group_by': 'submit_date'}"/>
+                    <filter name="groupby_submitter" string="Submitter" context="{'group_by': 'user_id'}"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Daily Report List View My -->
         <record model="ir.ui.view" id="view_kcms_daily_report_list_my">
             <field name="name">Daily Report list my</field>
             <field name="model">kcms.daily.report</field>
@@ -8,13 +22,13 @@
                 <tree>
                     <field name="submit_date"/>
                     <field name="working_date"/>
-                    <field name="list_id"/>
                     <field name="notes"/>
+                    <field name="list_id"/>
                 </tree>
             </field>
         </record>
 
-        <!-- Daily Report Form View my -->
+        <!-- Daily Report Form View My -->
         <record model="ir.ui.view" id="view_kcms_daily_report_form_my">
             <field name="name">Daily Report form all</field>
             <field name="model">kcms.daily.report</field>
@@ -53,8 +67,7 @@
             <field name="name">My Daily Report</field>
             <field name="res_model">kcms.daily.report</field>
             <field name="view_mode">tree,form</field>
-<!--            <field name="context">{'search_default_today': 1}</field>-->
-<!--            <field name="search_view_id" ref="hero_purchase.site_search_all"/>-->
+            <field name="context">{'search_default_today': 1}</field>
             <field name="view_ids"
                    eval="[
                         (5, 0, 0),

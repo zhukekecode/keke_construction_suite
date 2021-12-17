@@ -54,6 +54,9 @@ class KCMSProject(models.Model):
 
     user_ids = fields.Many2many('hr.employee', string='Project Managers: ',
                                 domain=[('department_id.name', '=', 'Construction')])
+    status = fields.Selection(
+        [('to_planning', '规划中'), ('to_process', '进行中'), ('is_completed', '已竣工')],
+        string="项目状态", default='to_process')
 
     # Our Project Manager
     @api.model

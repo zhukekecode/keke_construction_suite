@@ -39,7 +39,6 @@
             <field name="model">kcms.project.item.base</field>
             <field name="arch" type="xml">
                 <search>
-                    <field name="name" filter_domain="[('name','like',self)]"/>
                     <searchpanel>
                         <field name="itembase_id" icon="fa-list" string="Item Base" enable_counters="1"/>
                     </searchpanel>
