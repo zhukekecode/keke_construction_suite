@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import base64
 from odoo import api, fields, models, _, tools
 import datetime
 import pytz
-from odoo.exceptions import ValidationError, UserError
+
 
 class KCMSDailyReport(models.Model):
     _name = 'kcms.daily.report'
