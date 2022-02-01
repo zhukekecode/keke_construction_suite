@@ -44,13 +44,15 @@
                         </group>
                         <notebook>
                             <page string="Report">
-                                <field name="list_id">
+                                <field name="list_id"
+                                       attrs="{'readonly':[('id', '>', 0)]}">
                                     <tree editable="bottom">
                                         <field name="kcms_project_id"
-                                               options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"
+                                               widget="selection"
+                                               domain="[('project_id','!=', False),('status', '=', 'to_process')]"/>
+                                        <field name="kcms_project_item_base_id"
+                                               domain="[('daily_report','!=', False)]"
                                                widget="selection"/>
-                                        <field name="kcms_project_item_base_id" domain="[('daily_report','!=', False)]"
-                                               options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"/>
                                         <field name="working_hours" widget="float time"/>
                                         <field name="user_ids" widget="many2many_tags"/>
                                     </tree>

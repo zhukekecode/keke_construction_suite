@@ -4,7 +4,7 @@ import base64
 from odoo import api, fields, models, _, tools
 import datetime
 import pytz
-
+from odoo.exceptions import ValidationError, UserError
 
 class KCMSDailyReport(models.Model):
     _name = 'kcms.daily.report'
@@ -17,3 +17,9 @@ class KCMSDailyReport(models.Model):
                                require='1')
     notes = fields.Text(string='Notes')
     list_id = fields.One2many('kcms.daily.report.item', 'list_ids', string='List Records')
+
+    # @api.constrains('list_id')
+    # def check_list_id(self):
+    #     for item in self:
+    #         if item.working_hours <= 0:
+    #             raise ValidationError('Check your working hours.')

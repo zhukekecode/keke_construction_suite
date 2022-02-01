@@ -13,7 +13,8 @@ class KCMSProject(models.Model):
     _description = "keke construction management system (project) -- project"
     _parent_name = "project_id"
     _parent_store = True
-    _rec_name = 'code'
+    _rec_name = 'name_path'
+
 
     sequence = fields.Integer(string='Sequence')
     active = fields.Boolean(default=True,
@@ -24,7 +25,7 @@ class KCMSProject(models.Model):
     project_id = fields.Many2one("kcms.project", string="Parent Project: ", ondelete='restrict')
     project_ids = fields.One2many('kcms.project', 'project_id', string='Sub Projects: ')
     parent_path = fields.Char(index=True)
-    user_id = fields.Many2one('res.users', string='Project Manager: ', tracking=True)
+    user_id = fields.Many2one('res.users', string='Project Manager: ', tracking=True) # 这一个我没有用到
     attachment_number = fields.Integer('Number of Attachments', compute='_compute_attachment_number')
     item_ids = fields.One2many('kcms.project.must.do', 'list_ids', string='test**')
     ## Project/Block Informtion
@@ -32,13 +33,14 @@ class KCMSProject(models.Model):
     partner_id_FPC = fields.Char(string='Full name: ')
     contact_person = fields.Char(string="Contact Person: ")
     project_address = fields.Char(string="Address: ")
+
     project_name = fields.Char(string="Project Name: ")
     building_work = fields.Char(string="Building work: ")
     block_work = fields.Char(string="Block work: ")
     building_concent = fields.Char(string="BCO: ")
     lot_range = fields.Char(string="Lot Range: ")
     start_date = fields.Date(string="Start Date: ")
-    estimated_completion_date = fields.Date(string="Est. Completion Date: ")
+    estimated_completion_date = fields.Date(string="Complete Date: ")
     rc_number = fields.Char(string="R.C. No.")
     EPA = fields.Char(string="EPA: ")
 
@@ -51,14 +53,12 @@ class KCMSProject(models.Model):
     facsimile = fields.Char(string="Facsimile: ")
     comments = fields.Char(string="Comments: ")
     list_id = fields.One2many('kcms.project.must.do', 'list_ids', string='List Tasks')
-
     user_ids = fields.Many2many('hr.employee', string='Project Managers: ',
                                 domain=[('department_id.name', '=', 'Construction')])
     status = fields.Selection(
         [('to_planning', '规划中'), ('to_process', '进行中'), ('is_completed', '已竣工')],
         string="项目状态", default='to_process')
 
-    # Our Project Manager
     @api.model
     def create(self, vals):
         res = super(KCMSProject, self).create(vals)
@@ -66,9 +66,8 @@ class KCMSProject(models.Model):
             self.env['kcms.project'].create({
                 'code': res.code + 'GE',
                 'name': 'General',
-                'project_id': res.id,
+                'project_id': res.id
             })
-            print(self.env['kcms.project.must.do.tasks'].search([]))
             for task in self.env['kcms.project.must.do.tasks'].search([]):
                 self.env['kcms.project.must.do'].create({
                     'list_ids': res.id,
@@ -177,33 +176,7 @@ class KCMSProject(models.Model):
                     })
 
 
-class KCMSProjectMustDo(models.Model):
-    _name = "kcms.project.must.do"
-    _description = "keke construction management system (must do list) -- must do list"
-
-    list_ids = fields.Many2one("kcms.project", string="Must Do List: ")
-    task_ids = fields.Many2one("kcms.project.must.do.tasks", string="Task")
-    task_status = fields.Selection(
-        selection=[
-            ('Yes', 'Yes'),
-            ('Pending', 'Pending'),
-            ('No', 'No'),
-            ('NA', 'NA'),
-        ], string="Task Status"
-    )
-
-    comp_date = fields.Date(string="Completion Date")
-    principle_user = fields.Many2one('res.users', string='People in charge')
-    comment = fields.Text(string="Comment")
-
-    @api.onchange('comp_date', 'comment')
-    def _onchange_principle_user(self):
-        self.principle_user = self.env.user
 
 
-class KCMSProjectMustDoTasks(models.Model):
-    _name = "kcms.project.must.do.tasks"
-    _description = "keke construction management system (must do list tasks) -- must do list tasks"
 
-    name = fields.Char(string="name")
-    sequence = fields.Integer(string='Sequence')
+
