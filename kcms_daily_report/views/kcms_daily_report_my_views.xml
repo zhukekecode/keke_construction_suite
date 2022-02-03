@@ -50,7 +50,6 @@
                                                domain="[('project_id','!=', False),('status', '=', 'to_process')]"/>
                                         <field name="kcms_project_item_base_id"
                                                attrs="{'readonly':[('id', '>', 0)]}"
-                                               widget="selection"
                                                domain="[('daily_report','!=', False)]"/>
                                         <field name="working_hours" widget="float time"/>
                                         <field name="user_ids" widget="many2many_tags"/>
