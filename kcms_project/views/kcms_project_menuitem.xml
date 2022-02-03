@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <menuitem name="KCMS Project" id="menu_kcms_project_root" web_icon="kcms_project,static/description/icon.png"/>
+    <menuitem name="PM Project" id="menu_kcms_project_root" web_icon="kcms_project,static/description/icon.png"/>
     <menuitem name="Projects" id="menu_kcms_project" parent="menu_kcms_project_root" action="action_kcms_project_list"/>
     <menuitem name="Item Details" id="menu_kcms_project_frame" parent="menu_kcms_project_root" action="action_kcms_project_item_list"/>
     <menuitem name="Configuration" id="menu_kcms_project_configuration" parent="menu_kcms_project_root"/>

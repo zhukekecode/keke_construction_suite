@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "kcms_project",
+    'name': "PM_Project",
 
     'summary': """
-        Project module of KCMS(KEKE Construction Project Management System)""",
+        Project module of KCMS(Project Management)""",
 
     'description': """
-        Project module of KCMS(KEKE Construction Project Management System)""",
+        Project module of KCMS(Project Management)""",
 
     'author': "Lindsay Zhang & Jianzhuo Shen",
     'website': "http://www.zhukeke.co.nz",

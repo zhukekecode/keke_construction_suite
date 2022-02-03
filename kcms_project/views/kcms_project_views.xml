@@ -3,7 +3,7 @@
     <data>
         <record id="view_kcms_project_form" model="ir.ui.view">
             <field name="name">view.kcms.project.form</field>
-            <field name="model">kcms.project</field>
+            <field name="model">kcms.project.pm</field>
             <field name="arch" type="xml">
                 <form string="Project">
                     <header>
@@ -110,7 +110,7 @@
         <!-- List View -->
         <record id="view_kcms_project_list" model="ir.ui.view">
             <field name="name">kcms.project.list</field>
-            <field name="model">kcms.project</field>
+            <field name="model">kcms.project.pm</field>
             <field name="arch" type="xml">
                 <tree>
                     <field name="sequence" widget="handle"/>
@@ -128,7 +128,7 @@
 
         <record id="view_kcms_project_search" model="ir.ui.view">
             <field name="name">kcms.project.search</field>
-            <field name="model">kcms.project</field>
+            <field name="model">kcms.project.pm</field>
             <field name="arch" type="xml">
                 <search>
                     <filter name="groupby_status" string="Status" context="{'group_by': 'status'}"/>
@@ -150,7 +150,7 @@
         <!-- Kanban View Project -->
         <record id="view_kcms_project_kanban" model="ir.ui.view">
             <field name="name">Project Kanban</field>
-            <field name="model">kcms.project</field>
+            <field name="model">kcms.project.pm</field>
             <field name="arch" type="xml">
                 <kanban>
                     <field name="sequence" widget="handle"/>
@@ -181,7 +181,7 @@
 
         <record id="action_kcms_project_list" model="ir.actions.act_window">
             <field name="name">Projects</field>
-            <field name="res_model">kcms.project</field>
+            <field name="res_model">kcms.project.pm</field>
             <field name="view_mode">tree,kanban,form</field>
             <field name="view_id" ref="view_kcms_project_list"/>
             <field name="help" type="html">

@@ -8,7 +8,7 @@ class KCMSPurchaseOrder(models.Model):
     _inherit = 'purchase.order'
 
     kcms_project_item_id = fields.Many2one("kcms.project.item", string="Item Code", ondelete='restrict')
-    kcms_project_id = fields.Many2one("kcms.project", string="Project Code", ondelete='restrict')
+    kcms_project_id = fields.Many2one("kcms.project.pm", string="Project Code", ondelete='restrict')
     kcms_project_item_base_id = fields.Many2one("kcms.project.item.base", string="Item Base", ondelete='restrict')
 
     @onchange('kcms_project_item_id')

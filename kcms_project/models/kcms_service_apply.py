@@ -8,7 +8,7 @@ class KCMSProjectMustDo(models.Model):
     _name = "kcms.project.must.do"
     _description = "keke construction management system (must do list) -- must do list"
 
-    list_ids = fields.Many2one("kcms.project", string="Must Do List: ")
+    list_ids = fields.Many2one("kcms.project.pm", string="Must Do List: ")
     task_ids = fields.Many2one("kcms.project.must.do.tasks", string="Task")
     task_status = fields.Selection(
         selection=[

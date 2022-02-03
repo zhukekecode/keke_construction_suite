@@ -13,7 +13,7 @@ class KCMSSitePurchaseItem(models.Model):
     unit = fields.Char(string="Unit")
     quantity = fields.Integer(string="Quantity")
     purchase_id = fields.Many2one("kcms.site.purchase", string="Purchase Order", ondelete="cascade")
-    kcms_project_id = fields.Many2one("kcms.project", string="Project", ondelete="restrict")
+    kcms_project_id = fields.Many2one("kcms.project.pm", string="Project", ondelete="restrict")
     kcms_project_item_base_id = fields.Many2one("kcms.project.item.base", string='Task')
 
     @api.onchange('price')

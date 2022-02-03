@@ -28,7 +28,7 @@ class KCMSProjectItem(models.Model):
 
     sequence = fields.Integer(string='Sequence')
     code = fields.Char(string="Code")
-    project_id = fields.Many2one("kcms.project", string="Project", ondelete='restrict')
+    project_id = fields.Many2one("kcms.project.pm", string="Project", ondelete='restrict')
     base_id = fields.Many2one("kcms.project.item.base", string="Item", ondelete='restrict')
     company_id = fields.Many2one('res.company', default=lambda self: self.env.company)
     currency_id = fields.Many2one('res.currency', related='company_id.currency_id')

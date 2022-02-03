@@ -114,7 +114,7 @@ odoo.define('keke_construction.ImportEstimate', function (require) {
             var files = Array.prototype.slice.call(arguments, 1);
             return new Promise(function (resolve) {
                 self._rpc({
-                    model: 'kcms.project',
+                    model: 'kcms.project.pm',
                     method: 'create_item_from_attachments',
                     args: ["", _.map(files, function (file) {
                         return file.id;

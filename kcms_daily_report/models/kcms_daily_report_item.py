@@ -13,7 +13,7 @@ class KCMSDailyReportItem(models.Model):
     _description = 'keke construction management system (daily report) -- Daily Report'
 
     list_ids = fields.Many2one('kcms.daily.report', string='List Item', ondelete='cascade')
-    kcms_project_id = fields.Many2one("kcms.project", string="Project", ondelete='cascade')
+    kcms_project_id = fields.Many2one("kcms.project.pm", string="Project", ondelete='cascade')
     kcms_project_item_base_id = fields.Many2one("kcms.project.item.base", string="Task", ondelete='restrict', required='1')
     working_hours = fields.Float(string="Total Time", required='1', group_operator=False)
     user_ids = fields.Many2many('hr.employee', string='Group Members', domain=[('department_id.name', '=', 'Construction')])

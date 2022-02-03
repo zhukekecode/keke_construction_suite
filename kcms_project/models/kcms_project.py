@@ -9,7 +9,7 @@ from odoo.exceptions import ValidationError, UserError
 
 
 class KCMSProject(models.Model):
-    _name = "kcms.project"
+    _name = "kcms.project.pm"
     _description = "keke construction management system (project) -- project"
     _parent_name = "project_id"
     _parent_store = True
@@ -22,8 +22,8 @@ class KCMSProject(models.Model):
     code = fields.Char(string="Project Code: ")
     name = fields.Char(string="Project/Block: ")
     name_path = fields.Char(string="Internal Ref.: ", compute='_compute_name_path', store=True)
-    project_id = fields.Many2one("kcms.project", string="Parent Project: ", ondelete='restrict')
-    project_ids = fields.One2many('kcms.project', 'project_id', string='Sub Projects: ')
+    project_id = fields.Many2one("kcms.project.pm", string="Parent Project: ", ondelete='restrict')
+    project_ids = fields.One2many('kcms.project.pm', 'project_id', string='Sub Projects: ')
     parent_path = fields.Char(index=True)
     user_id = fields.Many2one('res.users', string='Project Manager: ', tracking=True) # 这一个我没有用到
     attachment_number = fields.Integer('Number of Attachments', compute='_compute_attachment_number')
@@ -63,7 +63,7 @@ class KCMSProject(models.Model):
     def create(self, vals):
         res = super(KCMSProject, self).create(vals)
         if not vals['project_id']:
-            self.env['kcms.project'].create({
+            self.env['kcms.project.pm'].create({
                 'code': res.code + 'GE',
                 'name': 'General',
                 'project_id': res.id
@@ -88,8 +88,8 @@ class KCMSProject(models.Model):
         if self.project_ids:
             for p in self.project_ids:
                 rids = rids + p.ids
-        res['domain'] = [('res_model', '=', 'kcms.project'), ('res_id', 'in', rids)]
-        res['context'] = {'default_res_model': 'kcms.project', 'default_res_id': self.id}
+        res['domain'] = [('res_model', '=', 'kcms.project.pm'), ('res_id', 'in', rids)]
+        res['context'] = {'default_res_model': 'kcms.project.pm', 'default_res_id': self.id}
         return res
 
     @api.depends('name', 'project_id.name_path')
@@ -102,7 +102,7 @@ class KCMSProject(models.Model):
 
     def _compute_attachment_number(self):
         attachment_data = self.env['ir.attachment'].read_group(
-            [('res_model', '=', 'kcms.project'), ('res_id', 'in', self.ids)], ['res_id'], ['res_id'])
+            [('res_model', '=', 'kcms.project.pm'), ('res_id', 'in', self.ids)], ['res_id'], ['res_id'])
         attachment = dict((data['res_id'], data['res_id_count']) for data in attachment_data)
         for expense in self:
             expense.attachment_number = attachment.get(expense.id, 0)
@@ -114,7 +114,7 @@ class KCMSProject(models.Model):
         if attachment_ids is None:
             attachment_ids = []
         attachments = self.env['ir.attachment'].browse(attachment_ids)
-        pid = self.env['kcms.project'].browse(pid)
+        pid = self.env['kcms.project.pm'].browse(pid)
         if not attachments:
             raise UserError(_("No attachment was provided"))
 

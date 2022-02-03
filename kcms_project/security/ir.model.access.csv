@@ -1,5 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_kcms_project,kcms.project,model_kcms_project,base.group_user,1,1,1,1
+access_kcms_project_pm,kcms.project.pm,model_kcms_project_pm,base.group_user,1,1,1,1
 access_kcms_project_item_base,kcms.project.item.base,model_kcms_project_item_base,base.group_user,1,1,1,1
 access_kcms_project_item,kcms.project.item,model_kcms_project_item,base.group_user,1,1,1,1
 access_kcms_project_subitem,kcms.project.subitem,model_kcms_project_subitem,base.group_user,1,1,1,1
