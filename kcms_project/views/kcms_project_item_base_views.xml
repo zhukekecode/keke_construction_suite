@@ -11,7 +11,7 @@
                             <group>
                                 <field name="code"/>
                                 <field name="name"/>
-                                <field name="discription"/>
+                                <field name="description"/>
                                 <field name="daily_report"/>
                                 <field name="site_purchase"/>
                             </group>
@@ -29,7 +29,7 @@
                     <field name="sequence" widget="handle"/>
                     <field name="code" string="Item Code"/>
                     <field name="name" string="Item Name"/>
-                    <field name="discription" string="Item discription"/>
+                    <field name="description" string="Item description"/>
                 </tree>
             </field>
         </record>

@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import api, fields, models, _, tools
-from odoo.api import onchange
-from odoo.osv import expression
-from odoo.exceptions import UserError, ValidationError
+from odoo import fields, models
 
 
 class KCMSProjectItemBase(models.Model):
@@ -12,8 +9,8 @@ class KCMSProjectItemBase(models.Model):
 
     sequence = fields.Integer(string='Sequence')
     code = fields.Char(string="Item Code")
-    name = fields.Char(string="Item Name")
-    discription = fields.Char(string="Item Discription")
+    name = fields.Char(string="Item Name", translate=True)
+    description = fields.Char(string="Item Description")
     UOM = fields.Char(string="UOM", default="N/A")
     itembase_id = fields.Many2one("kcms.project.item.base", string="Parent Item", ondelete='cascade')
     itembase_ids = fields.One2many('kcms.project.item.base', 'itembase_id', string='Sub Item')
@@ -49,5 +46,3 @@ class KCMSProjectSubitem(models.Model):
     rate = fields.Monetary('Rate', currency_field='currency_id', default=0.0)
     sub_total = fields.Monetary('Sub Total', currency_field='currency_id')
     item_id = fields.Many2one("kcms.project.item", string="Item", ondelete='cascade')
-
-
