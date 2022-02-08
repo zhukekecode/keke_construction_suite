@@ -54,7 +54,7 @@ class KCMSProject(models.Model):
     comments = fields.Char(string="Comments: ")
     list_id = fields.One2many('kcms.project.must.do', 'list_ids', string='List Tasks')
     user_ids = fields.Many2many('hr.employee', string='Project Managers: ',
-                                domain=[('department_id.name', '=', 'Construction')])
+                                domain=[('department_id.name', '=', 'Site Manager')])
     status = fields.Selection(
         [('to_planning', '规划中'), ('to_process', '进行中'), ('is_completed', '已竣工')],
         string="项目状态", default='to_process')
